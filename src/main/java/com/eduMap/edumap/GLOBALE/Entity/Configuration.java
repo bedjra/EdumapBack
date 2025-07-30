@@ -23,6 +23,9 @@ public class Configuration {
     private byte[] image;
 
 
+    @Enumerated(EnumType.STRING)
+    private System systeme;
+
 
     public Long getId() {
         return id;
@@ -88,4 +91,11 @@ public class Configuration {
         this.image = image;
     }
 
+    public System getSysteme() {
+        return systeme;
+    }
+
+    public void setSysteme(System systeme) {
+        this.systeme = systeme;
+    }
 }
