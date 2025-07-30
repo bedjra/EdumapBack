@@ -54,7 +54,7 @@ public class ConfigurationController {
 
 
     @Operation(summary = "Récupérer une configuration par ID")
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<Configuration> getConfigurationById(@PathVariable Long id) {
         Optional<Configuration> config = configurationService.getConfigurationById(id);
         return config.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());

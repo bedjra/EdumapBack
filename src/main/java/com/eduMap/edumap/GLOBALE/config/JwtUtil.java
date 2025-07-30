@@ -28,13 +28,13 @@
 //                    .setSubject(email)
 //                    .claim("role", role)
 //                    .setIssuedAt(new Date())
-//                    .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+//                    .setExpiration(new Date(Systeme.currentTimeMillis() + expirationTime))
 //                    .signWith(getSigningKey(), SignatureAlgorithm.HS512)
 //                    .compact();
-//            System.out.println("✅ Token généré : " + token);
+//            Systeme.out.println("✅ Token généré : " + token);
 //            return token;
 //        } catch (Exception e) {
-//            System.err.println("❌ Erreur lors de la génération du token : " + e.getMessage());
+//            Systeme.err.println("❌ Erreur lors de la génération du token : " + e.getMessage());
 //            throw e;
 //        }
 //    }

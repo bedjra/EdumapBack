@@ -1,13 +1,13 @@
 package com.eduMap.edumap.GLOBALE.enums;
 
-public enum System {
+public enum Systeme {
     PRIMAIRE("PRI"),
     COLLEGE("COL"),
     LYCEE("LYC");
 
     private final String code;
 
-    System(String code) {
+    Systeme(String code) {
         this.code = code;
     }
 

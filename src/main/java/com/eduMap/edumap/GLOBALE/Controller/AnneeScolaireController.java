@@ -12,7 +12,7 @@ import java.util.List;
 @Tag(name = "Annee", description = "Gestion des annees")
 
 @RestController
-@RequestMapping("/annee")
+@RequestMapping("/api/annee")
 public class AnneeScolaireController {
 
     @Autowired

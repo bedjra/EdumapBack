@@ -1,5 +1,6 @@
 package com.eduMap.edumap.GLOBALE.Entity;
 
+import com.eduMap.edumap.GLOBALE.enums.Systeme;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,7 +25,7 @@ public class Configuration {
 
 
     @Enumerated(EnumType.STRING)
-    private System systeme;
+    private Systeme systeme;
 
 
     public Long getId() {
@@ -91,11 +92,11 @@ public class Configuration {
         this.image = image;
     }
 
-    public System getSysteme() {
+    public Systeme getSysteme() {
         return systeme;
     }
 
-    public void setSysteme(System systeme) {
+    public void setSysteme(Systeme systeme) {
         this.systeme = systeme;
     }
 }
