@@ -1,8 +1,8 @@
-package skool.saas.skool.A_PRIMAIRE.enums;
+package com.eduMap.edumap.A_PRIMAIRE.enums;
 
 
 public enum ClassePRIMAIRE {
-    CI("01"),
+//    CI("01"),
     CP1("02"),
     CP2("03"),
     CE1("04"),
