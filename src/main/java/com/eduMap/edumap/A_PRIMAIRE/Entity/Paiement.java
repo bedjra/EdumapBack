@@ -1,11 +1,10 @@
 package com.eduMap.edumap.A_PRIMAIRE.Entity;
 
+import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
 import com.eduMap.edumap.A_PRIMAIRE.enums.StatutScolarite;
 import com.eduMap.edumap.GLOBALE.Entity.AnneeScolaire;
 import jakarta.persistence.*;
 import lombok.Data;
-import skool.saas.skool.A_PRIMAIRE.enums.ClassePRIMAIRE;
-import skool.saas.skool.A_PRIMAIRE.enums.StatutScolarite;
 
 import java.time.LocalDate;
 
