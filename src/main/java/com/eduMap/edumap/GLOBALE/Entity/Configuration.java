@@ -2,6 +2,7 @@ package com.eduMap.edumap.GLOBALE.Entity;
 
 import com.eduMap.edumap.GLOBALE.enums.Systeme;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.sql.Date;
@@ -23,7 +24,7 @@ public class Configuration {
     @Lob
     private byte[] image;
 
-
+    @NotNull(message = "Le système est obligatoire")
     @Enumerated(EnumType.STRING)
     private Systeme systeme;
 

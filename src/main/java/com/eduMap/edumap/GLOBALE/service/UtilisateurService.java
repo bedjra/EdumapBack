@@ -31,10 +31,6 @@ public class UtilisateurService {
     }
 
 
-    public Utilisateur findByEmailAndPassword(String email, String password) {
-        return utilisateurRepository.findByEmailAndPassword(email, password);
-    }
-
     public Utilisateur saveUtilisateur(Utilisateur utilisateur) {
         return utilisateurRepository.save(utilisateur);
     }
@@ -76,4 +72,18 @@ public class UtilisateurService {
 
         return utilisateurRepository.findByEmail(email);
     }
+
+
+    @Autowired
+    private LicenceService licenceService;
+
+    public Utilisateur findByEmailAndPassword(String email, String password) {
+        // Bloquer la connexion si la licence est expirée
+        if (!licenceService.isLicenceValide()) {
+            throw new IllegalStateException("La licence est expirée. Veuillez contacter l'administrateur.");
+        }
+
+        return utilisateurRepository.findByEmailAndPassword(email, password);
+    }
+
 }

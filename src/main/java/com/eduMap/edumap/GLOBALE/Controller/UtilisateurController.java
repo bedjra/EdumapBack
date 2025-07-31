@@ -46,25 +46,32 @@ public class  UtilisateurController {
 
 
     // ✅ Connexion simplifiée : email + password
-    // ✅ Connexion simplifiée : email + password
     @Operation(summary = "Connexion")
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> credentials) {
         Map<String, Object> response = new HashMap<>();
 
-        String email = credentials.get("email");
-        String password = credentials.get("password");
+        try {
+            String email = credentials.get("email");
+            String password = credentials.get("password");
 
-        Utilisateur utilisateur = utilisateurService.findByEmailAndPassword(email, password);
-        if (utilisateur != null) {
+            Utilisateur utilisateur = utilisateurService.findByEmailAndPassword(email, password);
             response.put("success", true);
             response.put("message", "Login réussi");
             response.put("role", utilisateur.getRole());
             return ResponseEntity.ok(response);
-        } else {
+
+        } catch (IllegalStateException e) {
+            // Cas spécifique : licence expirée ou autre règle métier
             response.put("success", false);
-            response.put("message", "Email ou mot de passe incorrect");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            response.put("message", e.getMessage()); // ex: "La licence est expirée. Veuillez contacter l'administrateur."
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+
+        } catch (Exception e) {
+            // Cas générique
+            response.put("success", false);
+            response.put("message", "Erreur serveur inattendue");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 

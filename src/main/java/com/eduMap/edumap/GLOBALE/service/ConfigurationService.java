@@ -16,29 +16,40 @@ public class ConfigurationService {
     @Autowired
     private ConfigurationRepository configurationRepository;
 
+    @Autowired
+    private AnneeScolaireService anneeScolaireService;
+
+
     public Configuration saveConfiguration(Configuration config) {
-        return configurationRepository.save(config);
+        Configuration saved = configurationRepository.save(config);
+
+        // Si c’est la première configuration, on initialise l’année scolaire
+        if (configurationRepository.count() == 1) {
+            anneeScolaireService.initialiserOuActiverAnneeScolaire();
+        }
+
+        return saved;
     }
 
 
 
     public Configuration updateConfiguration(Long id, Configuration config) {
         Configuration existing = configurationRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Configuration non trouvée avec l’ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Configuration non trouvée"));
 
+        // Met à jour les champs manuellement si besoin
         existing.setNom(config.getNom());
         existing.setAdresse(config.getAdresse());
-        existing.setDevise(config.getDevise());
         existing.setTel(config.getTel());
         existing.setCel(config.getCel());
         existing.setBp(config.getBp());
+        existing.setDevise(config.getDevise());
         existing.setImage(config.getImage());
         existing.setSysteme(config.getSysteme());
 
-
         return configurationRepository.save(existing);
     }
-    @Transactional
+
 
     // Récupérer toutes les configurations
     public List<Configuration> getAllConfigurations() {
