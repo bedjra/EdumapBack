@@ -1,8 +1,8 @@
-package skool.saas.skool.A_PRIMAIRE.repository;
+package com.eduMap.edumap.A_PRIMAIRE.repository;
 
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Eleve;
+import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
 import org.springframework.data.jpa.repository.JpaRepository;
-import skool.saas.skool.A_PRIMAIRE.Entity.Eleve;
-import skool.saas.skool.A_PRIMAIRE.enums.ClassePRIMAIRE;
 
 import java.util.List;
 import java.util.Optional;

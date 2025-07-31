@@ -1,13 +1,12 @@
-package skool.saas.skool.A_PRIMAIRE.repository;
+package com.eduMap.edumap.A_PRIMAIRE.repository;
 
 
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Eleve;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Paiement;
+import com.eduMap.edumap.GLOBALE.Entity.AnneeScolaire;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import skool.saas.skool.A_PRIMAIRE.Entity.Eleve;
-import skool.saas.skool.A_PRIMAIRE.Entity.Paiement;
-import skool.saas.skool.A_PRIMAIRE.enums.ClassePRIMAIRE;
-import skool.saas.skool.GLOBALE.Entity.AnneeScolaire;
 
 import java.util.List;
 import java.util.Optional;
