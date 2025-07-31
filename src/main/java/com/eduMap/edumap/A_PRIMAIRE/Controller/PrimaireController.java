@@ -9,6 +9,7 @@ import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
 import com.eduMap.edumap.A_PRIMAIRE.service.EleveService;
 import com.eduMap.edumap.A_PRIMAIRE.service.MatiereService;
 import com.eduMap.edumap.A_PRIMAIRE.service.NoteService;
+import com.eduMap.edumap.A_PRIMAIRE.service.PaiementService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

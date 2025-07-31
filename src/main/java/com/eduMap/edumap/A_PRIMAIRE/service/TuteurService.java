@@ -1,4 +1,4 @@
-package skool.saas.skool.A_PRIMAIRE.service;
+package com.eduMap.edumap.A_PRIMAIRE.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
