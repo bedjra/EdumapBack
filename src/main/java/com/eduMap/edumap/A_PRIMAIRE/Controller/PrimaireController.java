@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/Primaire")
+@RequestMapping("/api/Primaire")
 
 @Tag(name = "Primaire", description = "Gestion du system PRIMAIRE")
 
