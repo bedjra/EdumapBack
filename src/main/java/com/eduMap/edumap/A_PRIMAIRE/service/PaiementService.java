@@ -1,21 +1,10 @@
-package skool.saas.skool.A_PRIMAIRE.service;
+package com.eduMap.edumap.A_PRIMAIRE.service;
 
 
+import com.eduMap.edumap.A_PRIMAIRE.repository.PaiementRepository;
+import com.eduMap.edumap.A_PRIMAIRE.repository.ScolariteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import skool.saas.skool.A_PRIMAIRE.Dto.PaiementDto;
-import skool.saas.skool.A_PRIMAIRE.Dto.PaiementHistoriqueDto;
-import skool.saas.skool.A_PRIMAIRE.Dto.PaiementRequestDto;
-import skool.saas.skool.A_PRIMAIRE.Entity.Eleve;
-import skool.saas.skool.A_PRIMAIRE.Entity.Paiement;
-import skool.saas.skool.A_PRIMAIRE.Entity.Scolarite;
-import skool.saas.skool.A_PRIMAIRE.enums.ClassePRIMAIRE;
-import skool.saas.skool.A_PRIMAIRE.enums.StatutScolarite;
-import skool.saas.skool.A_PRIMAIRE.repository.EleveRepository;
-import skool.saas.skool.A_PRIMAIRE.repository.PaiementRepository;
-import skool.saas.skool.A_PRIMAIRE.repository.ScolariteRepository;
-import skool.saas.skool.GLOBALE.Entity.AnneeContext;
-import skool.saas.skool.GLOBALE.Entity.AnneeScolaire;
 
 import java.time.LocalDate;
 import java.util.List;

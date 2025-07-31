@@ -1,5 +1,14 @@
 package skool.saas.skool.A_PRIMAIRE.Controller;
 
+import com.eduMap.edumap.A_PRIMAIRE.Dto.*;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Eleve;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Matiere;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Professeur;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Scolarite;
+import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
+import com.eduMap.edumap.A_PRIMAIRE.service.EleveService;
+import com.eduMap.edumap.A_PRIMAIRE.service.MatiereService;
+import com.eduMap.edumap.A_PRIMAIRE.service.NoteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,13 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import skool.saas.skool.A_PRIMAIRE.Dto.*;
-import skool.saas.skool.A_PRIMAIRE.Entity.Eleve;
-import skool.saas.skool.A_PRIMAIRE.Entity.Matiere;
-import skool.saas.skool.A_PRIMAIRE.Entity.Professeur;
-import skool.saas.skool.A_PRIMAIRE.Entity.Scolarite;
-import skool.saas.skool.A_PRIMAIRE.enums.ClassePRIMAIRE;
-import skool.saas.skool.A_PRIMAIRE.service.*;
 
 import java.util.Arrays;
 import java.util.Collections;

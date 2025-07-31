@@ -1,18 +1,19 @@
-package skool.saas.skool.A_PRIMAIRE.service;
+package com.eduMap.edumap.A_PRIMAIRE.service;
 
+import com.eduMap.edumap.A_PRIMAIRE.Dto.NoteDto;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Eleve;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Matiere;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Note;
+import com.eduMap.edumap.A_PRIMAIRE.enums.EvaluationPrimaire;
+import com.eduMap.edumap.A_PRIMAIRE.enums.MatierePrimaire;
+import com.eduMap.edumap.A_PRIMAIRE.repository.EleveRepository;
+import com.eduMap.edumap.A_PRIMAIRE.repository.MatiereRepository;
+import com.eduMap.edumap.A_PRIMAIRE.repository.NoteRepository;
+import com.eduMap.edumap.GLOBALE.Entity.AnneeContext;
+import com.eduMap.edumap.GLOBALE.Entity.AnneeScolaire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import skool.saas.skool.A_PRIMAIRE.Dto.NoteDto;
-import skool.saas.skool.A_PRIMAIRE.Entity.Eleve;
-import skool.saas.skool.A_PRIMAIRE.Entity.Matiere;
-import skool.saas.skool.A_PRIMAIRE.Entity.Note;
-import skool.saas.skool.A_PRIMAIRE.enums.EvaluationPrimaire;
-import skool.saas.skool.A_PRIMAIRE.enums.MatierePrimaire;
-import skool.saas.skool.A_PRIMAIRE.repository.EleveRepository;
-import skool.saas.skool.A_PRIMAIRE.repository.MatiereRepository;
-import skool.saas.skool.A_PRIMAIRE.repository.NoteRepository;
-import skool.saas.skool.GLOBALE.Entity.AnneeContext;
-import skool.saas.skool.GLOBALE.Entity.AnneeScolaire;
+
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

@@ -1,10 +1,10 @@
-package skool.saas.skool.A_PRIMAIRE.service;
+package com.eduMap.edumap.A_PRIMAIRE.service;
 
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Matiere;
+import com.eduMap.edumap.A_PRIMAIRE.enums.MatierePrimaire;
+import com.eduMap.edumap.A_PRIMAIRE.repository.MatiereRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import skool.saas.skool.A_PRIMAIRE.Entity.Matiere;
-import skool.saas.skool.A_PRIMAIRE.enums.MatierePrimaire;
-import skool.saas.skool.A_PRIMAIRE.repository.MatiereRepository;
 
 import java.util.Arrays;
 import java.util.HashMap;
