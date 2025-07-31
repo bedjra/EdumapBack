@@ -1,8 +1,19 @@
 package com.eduMap.edumap.A_PRIMAIRE.service;
 
 
+import com.eduMap.edumap.A_PRIMAIRE.Dto.PaiementDto;
+import com.eduMap.edumap.A_PRIMAIRE.Dto.PaiementHistoriqueDto;
+import com.eduMap.edumap.A_PRIMAIRE.Dto.PaiementRequestDto;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Eleve;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Paiement;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Scolarite;
+import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
+import com.eduMap.edumap.A_PRIMAIRE.enums.StatutScolarite;
+import com.eduMap.edumap.A_PRIMAIRE.repository.EleveRepository;
 import com.eduMap.edumap.A_PRIMAIRE.repository.PaiementRepository;
 import com.eduMap.edumap.A_PRIMAIRE.repository.ScolariteRepository;
+import com.eduMap.edumap.GLOBALE.Entity.AnneeContext;
+import com.eduMap.edumap.GLOBALE.Entity.AnneeScolaire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
