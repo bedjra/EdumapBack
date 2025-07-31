@@ -1,5 +1,14 @@
-package skool.saas.skool.A_PRIMAIRE.service;
+package com.eduMap.edumap.A_PRIMAIRE.service;
 
+import com.eduMap.edumap.A_PRIMAIRE.Dto.ClasseStatistiqueDto;
+import com.eduMap.edumap.A_PRIMAIRE.Dto.EleveDto;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Eleve;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Tuteur;
+import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
+import com.eduMap.edumap.A_PRIMAIRE.repository.EleveRepository;
+import com.eduMap.edumap.A_PRIMAIRE.repository.TuteurRepository;
+import com.eduMap.edumap.GLOBALE.Entity.AnneeContext;
+import com.eduMap.edumap.GLOBALE.Entity.AnneeScolaire;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
