@@ -1,4 +1,4 @@
-package skool.saas.skool.A_PRIMAIRE.Entity;
+package com.eduMap.edumap.A_PRIMAIRE.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

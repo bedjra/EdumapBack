@@ -1,10 +1,10 @@
-package skool.saas.skool.A_PRIMAIRE.Entity;
+package com.eduMap.edumap.A_PRIMAIRE.Entity;
 
+import com.eduMap.edumap.GLOBALE.Entity.AnneeScolaire;
 import jakarta.persistence.*;
 import skool.saas.skool.A_PRIMAIRE.enums.ClassePRIMAIRE;
 import skool.saas.skool.A_PRIMAIRE.enums.EvaluationPrimaire;
 import skool.saas.skool.A_PRIMAIRE.enums.MatierePrimaire;
-import skool.saas.skool.GLOBALE.Entity.AnneeScolaire;
 
 @Entity
 @Table(name = "PrimaireNote")
