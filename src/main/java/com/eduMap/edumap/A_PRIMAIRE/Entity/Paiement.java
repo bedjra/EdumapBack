@@ -1,5 +1,6 @@
 package com.eduMap.edumap.A_PRIMAIRE.Entity;
 
+import com.eduMap.edumap.A_PRIMAIRE.enums.StatutScolarite;
 import com.eduMap.edumap.GLOBALE.Entity.AnneeScolaire;
 import jakarta.persistence.*;
 import lombok.Data;
