@@ -1,10 +1,10 @@
-package skool.saas.skool.A_PRIMAIRE.Dto;
+package com.eduMap.edumap.A_PRIMAIRE.Dto;
 
 
 
-import skool.saas.skool.A_PRIMAIRE.Entity.Scolarite;
-import skool.saas.skool.A_PRIMAIRE.enums.ClassePRIMAIRE;
-import skool.saas.skool.A_PRIMAIRE.enums.StatutScolarite;
+
+import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
+import com.eduMap.edumap.A_PRIMAIRE.enums.StatutScolarite;
 
 import java.time.LocalDate;
 

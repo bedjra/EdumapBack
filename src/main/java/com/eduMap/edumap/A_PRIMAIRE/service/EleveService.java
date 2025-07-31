@@ -6,15 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import skool.saas.skool.A_PRIMAIRE.Dto.ClasseStatistiqueDto;
-import skool.saas.skool.A_PRIMAIRE.Dto.EleveDto;
-import skool.saas.skool.A_PRIMAIRE.Entity.Eleve;
-import skool.saas.skool.A_PRIMAIRE.Entity.Tuteur;
-import skool.saas.skool.A_PRIMAIRE.enums.ClassePRIMAIRE;
-import skool.saas.skool.A_PRIMAIRE.repository.EleveRepository;
-import skool.saas.skool.A_PRIMAIRE.repository.TuteurRepository;
-import skool.saas.skool.GLOBALE.Entity.AnneeContext;
-import skool.saas.skool.GLOBALE.Entity.AnneeScolaire;
+
+
 
 import java.util.ArrayList;
 import java.util.List;

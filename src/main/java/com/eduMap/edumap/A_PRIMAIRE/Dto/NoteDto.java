@@ -1,6 +1,7 @@
-package skool.saas.skool.A_PRIMAIRE.Dto;
+package com.eduMap.edumap.A_PRIMAIRE.Dto;
 
-import skool.saas.skool.A_PRIMAIRE.enums.ClassePRIMAIRE;
+
+import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
 
 import java.util.List;
 

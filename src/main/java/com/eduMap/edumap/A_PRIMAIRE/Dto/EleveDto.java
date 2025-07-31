@@ -1,9 +1,9 @@
-package skool.saas.skool.A_PRIMAIRE.Dto;
+package com.eduMap.edumap.A_PRIMAIRE.Dto;
 
+import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import skool.saas.skool.A_PRIMAIRE.enums.ClassePRIMAIRE;
 
 import java.time.LocalDate;
 

@@ -1,4 +1,4 @@
-package skool.saas.skool.A_PRIMAIRE.Dto;
+package com.eduMap.edumap.A_PRIMAIRE.Dto;
 
 public class TuteurSimpleDto {
     private Long id;

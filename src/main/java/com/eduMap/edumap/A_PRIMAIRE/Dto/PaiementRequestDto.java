@@ -1,4 +1,4 @@
-package skool.saas.skool.A_PRIMAIRE.Dto;
+package com.eduMap.edumap.A_PRIMAIRE.Dto;
 
 import java.time.LocalDate;
 
