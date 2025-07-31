@@ -1,13 +1,14 @@
-package skool.saas.skool.A_PRIMAIRE.service;
+package com.eduMap.edumap.A_PRIMAIRE.service;
 
+import com.eduMap.edumap.A_PRIMAIRE.Entity.Scolarite;
+import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
+import com.eduMap.edumap.A_PRIMAIRE.repository.ScolariteRepository;
+import com.eduMap.edumap.GLOBALE.Entity.AnneeContext;
+import com.eduMap.edumap.GLOBALE.Entity.AnneeScolaire;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import skool.saas.skool.A_PRIMAIRE.Entity.Scolarite;
-import skool.saas.skool.A_PRIMAIRE.enums.ClassePRIMAIRE;
-import skool.saas.skool.A_PRIMAIRE.repository.ScolariteRepository;
-import skool.saas.skool.GLOBALE.Entity.AnneeContext;
-import skool.saas.skool.GLOBALE.Entity.AnneeScolaire;
+
 
 import java.util.List;
 import java.util.Optional;
