@@ -1,4 +1,4 @@
-package skool.saas.skool.A_PRIMAIRE.Controller;
+package com.eduMap.edumap.A_PRIMAIRE.Controller;
 
 import com.eduMap.edumap.A_PRIMAIRE.Dto.*;
 import com.eduMap.edumap.A_PRIMAIRE.Entity.Eleve;
@@ -6,10 +6,7 @@ import com.eduMap.edumap.A_PRIMAIRE.Entity.Matiere;
 import com.eduMap.edumap.A_PRIMAIRE.Entity.Professeur;
 import com.eduMap.edumap.A_PRIMAIRE.Entity.Scolarite;
 import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
-import com.eduMap.edumap.A_PRIMAIRE.service.EleveService;
-import com.eduMap.edumap.A_PRIMAIRE.service.MatiereService;
-import com.eduMap.edumap.A_PRIMAIRE.service.NoteService;
-import com.eduMap.edumap.A_PRIMAIRE.service.PaiementService;
+import com.eduMap.edumap.A_PRIMAIRE.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
