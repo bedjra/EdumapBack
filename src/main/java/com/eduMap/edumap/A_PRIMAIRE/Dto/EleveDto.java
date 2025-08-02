@@ -23,7 +23,6 @@ public class EleveDto {
     private String etblProv;
     private String nationnalite;
     private LocalDate dateNaiss;
-    private byte[] photo;
 
 
 
@@ -125,13 +124,6 @@ public class EleveDto {
         this.dateNaiss = dateNaiss;
     }
 
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
 
     public String getTuteurNom() {
         return tuteurNom;

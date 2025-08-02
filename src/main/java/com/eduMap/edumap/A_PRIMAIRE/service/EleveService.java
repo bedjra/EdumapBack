@@ -60,7 +60,6 @@ public class EleveService {
         eleve.setEtblProv(dto.getEtblProv());
         eleve.setNationnalite(dto.getNationnalite());
         eleve.setDateNaiss(dto.getDateNaiss());
-        eleve.setPhoto(dto.getPhoto());
         eleve.setTuteur(tuteur);
 
         // 3. Ajoute l’année scolaire active
@@ -98,7 +97,6 @@ public class EleveService {
         eleve.setEtblProv(dto.getEtblProv());
         eleve.setNationnalite(dto.getNationnalite());
         eleve.setDateNaiss(dto.getDateNaiss());
-        eleve.setPhoto(dto.getPhoto());
 
         // Mise à jour du tuteur
         Optional<Tuteur> optionalTuteur = tuteurRepository
@@ -177,7 +175,6 @@ public class EleveService {
         dto.setEtblProv(eleve.getEtblProv());
         dto.setNationnalite(eleve.getNationnalite());
         dto.setDateNaiss(eleve.getDateNaiss());
-        dto.setPhoto(eleve.getPhoto());
 
         if (eleve.getTuteur() != null) {
             dto.setTuteurNom(eleve.getTuteur().getNom());
