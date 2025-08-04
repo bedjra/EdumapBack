@@ -2,7 +2,9 @@ package com.eduMap.edumap.GLOBALE.service;
 
 
 
+import com.eduMap.edumap.GLOBALE.Entity.Configuration;
 import com.eduMap.edumap.GLOBALE.Entity.Utilisateur;
+import com.eduMap.edumap.GLOBALE.repository.ConfigurationRepository;
 import com.eduMap.edumap.GLOBALE.repository.UtilisateurRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -11,7 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UtilisateurService {
@@ -21,6 +25,14 @@ public class UtilisateurService {
 
     @Autowired
     private ConfigurationService configurationService;
+
+    @Autowired
+    private ConfigurationRepository configurationRepository;
+
+    @Autowired
+    private LicenceService licenceService;
+
+
 
     public String getRoleByEmail(String email) {
         Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
@@ -74,8 +86,7 @@ public class UtilisateurService {
     }
 
 
-    @Autowired
-    private LicenceService licenceService;
+
 
     public Utilisateur findByEmailAndPassword(String email, String password) {
         // Bloquer la connexion si la licence est expirée
@@ -84,6 +95,34 @@ public class UtilisateurService {
         }
 
         return utilisateurRepository.findByEmailAndPassword(email, password);
+    }
+
+
+
+    public Map<String, Object> login(String email, String password) {
+        Map<String, Object> response = new HashMap<>();
+
+        Utilisateur utilisateur = findByEmailAndPassword(email, password);
+
+        if (utilisateur == null) {
+            throw new IllegalArgumentException("Email ou mot de passe incorrect");
+        }
+
+        response.put("success", true);
+        response.put("message", "Login réussi");
+        response.put("role", utilisateur.getRole().name());
+
+        Configuration config = configurationRepository.findAll()
+                .stream().findFirst()
+                .orElse(null);
+
+        if (config != null) {
+            response.put("systeme", config.getSysteme());
+        } else {
+            response.put("systeme", null);
+        }
+
+        return response;
     }
 
 }

@@ -148,8 +148,8 @@ public class EleveService {
         for (ClassePRIMAIRE classeEnum : ClassePRIMAIRE.values()) {
             String classe = classeEnum.name();
             long total = eleveRepository.countByClasse(ClassePRIMAIRE.valueOf(classe));
-            long garcons = eleveRepository.countByClasseAndSexeIgnoreCase(ClassePRIMAIRE.valueOf(classe), "Masculin");
-            long filles = eleveRepository.countByClasseAndSexeIgnoreCase(ClassePRIMAIRE.valueOf(classe), "Feminin");
+            long garcons = eleveRepository.countByClasseAndSexeIgnoreCase(ClassePRIMAIRE.valueOf(classe), "M");
+            long filles = eleveRepository.countByClasseAndSexeIgnoreCase(ClassePRIMAIRE.valueOf(classe), "F");
 
             stats.add(new ClasseStatistiqueDto(classe, total, garcons, filles));
         }

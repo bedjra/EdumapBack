@@ -1,6 +1,7 @@
 package com.eduMap.edumap.GLOBALE.Entity;
 
 import com.eduMap.edumap.GLOBALE.enums.Role;
+import com.eduMap.edumap.GLOBALE.enums.Systeme;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,8 +18,6 @@ public class Utilisateur {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-
 
 
     public long getIdUser() {

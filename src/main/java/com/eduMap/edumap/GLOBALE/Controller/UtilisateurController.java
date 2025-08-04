@@ -45,36 +45,36 @@ public class  UtilisateurController {
     }
 
 
-    // ✅ Connexion simplifiée : email + password
+    // Connexion
     @Operation(summary = "Connexion")
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> credentials) {
-        Map<String, Object> response = new HashMap<>();
-
         try {
             String email = credentials.get("email");
             String password = credentials.get("password");
 
-            Utilisateur utilisateur = utilisateurService.findByEmailAndPassword(email, password);
-            response.put("success", true);
-            response.put("message", "Login réussi");
-            response.put("role", utilisateur.getRole());
+            Map<String, Object> response = utilisateurService.login(email, password);
             return ResponseEntity.ok(response);
 
         } catch (IllegalStateException e) {
-            // Cas spécifique : licence expirée ou autre règle métier
-            response.put("success", false);
-            response.put("message", e.getMessage()); // ex: "La licence est expirée. Veuillez contacter l'administrateur."
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+
+        } catch (IllegalArgumentException e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
 
         } catch (Exception e) {
-            // Cas générique
-            response.put("success", false);
-            response.put("message", "Erreur serveur inattendue");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Erreur serveur inattendue");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
-
 
     // ✅ Enregistrement d’un utilisateur (avec rôle)
     @Operation(summary = "Inscription d'un compte")

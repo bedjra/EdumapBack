@@ -1,4 +1,5 @@
 package com.eduMap.edumap.GLOBALE.Controller;
+import com.eduMap.edumap.GLOBALE.enums.Systeme;
 import com.eduMap.edumap.GLOBALE.service.SystemStateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -6,17 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Tag(name = "Systeme", description = "Gestion du choix de system")
 
 @RestController
-@RequestMapping("/system")
+@RequestMapping("/api/system")
 public class SystemController {
 
     @Autowired
     private SystemStateService systemStateService;
+
+    @GetMapping("/all")
+    public List<Systeme> getAllSystemes() {
+        return Arrays.asList(Systeme.values());
+    }
 
 
     @GetMapping
