@@ -4,6 +4,7 @@ package com.eduMap.edumap.A_PRIMAIRE.service;
 import com.eduMap.edumap.A_PRIMAIRE.Dto.PaiementDto;
 import com.eduMap.edumap.A_PRIMAIRE.Dto.PaiementHistoriqueDto;
 import com.eduMap.edumap.A_PRIMAIRE.Dto.PaiementRequestDto;
+import com.eduMap.edumap.A_PRIMAIRE.Dto.StatPaiementPrimaireDTO;
 import com.eduMap.edumap.A_PRIMAIRE.Entity.Eleve;
 import com.eduMap.edumap.A_PRIMAIRE.Entity.Paiement;
 import com.eduMap.edumap.A_PRIMAIRE.Entity.Scolarite;
@@ -60,7 +61,7 @@ public class PaiementService {
         paiement.setMontantActuel((long) montantActuel);
         paiement.setMontantDejaPaye((long) total);
         paiement.setResteEcolage((long) (montantScolarite - total));
-        paiement.setStatut(total == montantScolarite ? StatutScolarite.SOLDÉ : StatutScolarite.EN_COURS);
+        paiement.setStatut(total == montantScolarite ? StatutScolarite.SOLDE : StatutScolarite.EN_COURS);
         paiement.setScolarite(scolarite);
         paiement.setAnneeScolaire(anneeActive);
 
@@ -117,7 +118,7 @@ public class PaiementService {
 
             Long reste = dernierPaiement.getResteEcolage();
             boolean estSolde = (reste != null && reste == 0);
-            dto.setStatut(estSolde ? StatutScolarite.SOLDÉ : StatutScolarite.EN_COURS);
+            dto.setStatut(estSolde ? StatutScolarite.SOLDE : StatutScolarite.EN_COURS);
         } else {
             // Aucun paiement existant
             dto.setMontantDejaPaye(0);
@@ -156,7 +157,7 @@ public class PaiementService {
 
                 Long reste = dernierPaiement.getResteEcolage();
                 boolean estSolde = reste != null && reste == 0;
-                dto.setStatut(estSolde ? StatutScolarite.SOLDÉ : StatutScolarite.EN_COURS);
+                dto.setStatut(estSolde ? StatutScolarite.SOLDE : StatutScolarite.EN_COURS);
             } else {
                 dto.setMontantActuel(0);
                 dto.setMontantDejaPaye(0);
@@ -185,6 +186,10 @@ public class PaiementService {
         }).collect(Collectors.toList());
     }
 
+
+//    public List<StatPaiementPrimaireDTO> getStatistiquesPaiementParClasse() {
+//        return paiementRepository.getStatistiquesParClasse();
+//    }
 
 }
 

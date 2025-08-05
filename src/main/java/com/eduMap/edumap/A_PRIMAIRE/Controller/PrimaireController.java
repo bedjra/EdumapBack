@@ -9,9 +9,11 @@ import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
 import com.eduMap.edumap.A_PRIMAIRE.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -64,11 +66,20 @@ public class PrimaireController {
         return ResponseEntity.ok(updated);
     }
 
-    @Operation(summary = "delete un eleve ")
+    @Operation(summary = "delete un eleve")
     @DeleteMapping("/eleve/{id}")
+    @PreAuthorize("hasRole('ADMIN')")  // Seul le rôle ADMIN peut appeler cette méthode
     public ResponseEntity<Void> supprimerEleve(@PathVariable Long id) {
-        eleveService.supprimerEleve(id);
-        return ResponseEntity.noContent().build();
+        try {
+            eleveService.supprimerEleve(id);
+            return ResponseEntity.noContent().build();  // 204 No Content si succès
+        } catch (EntityNotFoundException e) {
+            // Élève non trouvé : on renvoie 404 Not Found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            // Pour toute autre erreur, renvoyer 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 
@@ -125,6 +136,12 @@ public class PrimaireController {
         return eleveService.getEleveById(id);
     }
 
+    @Operation(summary = "Get un élève par son matricule")
+    @GetMapping("/eleve/matricule/{matricule}")
+    public ResponseEntity<EleveDto> getEleveByMatricule(@PathVariable String matricule) {
+        EleveDto eleveDto = eleveService.getEleveByMatricule(matricule);
+        return ResponseEntity.ok(eleveDto);
+    }
 
 
     // // // // // // // // // // // // // // // // // // // // // // //
@@ -276,7 +293,10 @@ public class PrimaireController {
         }
     }
 
-
+//    @GetMapping("/Paiement/stat")
+//    public List<StatPaiementPrimaireDTO> getStatistiquesParClasse() {
+//        return paiementService.getStatistiquesPaiementParClasse();
+//    }
 
 
     // // // // // // // // // // // // // // // // // // // // // // //

@@ -1,6 +1,7 @@
 package com.eduMap.edumap.A_PRIMAIRE.repository;
 
 
+import com.eduMap.edumap.A_PRIMAIRE.Dto.StatPaiementPrimaireDTO;
 import com.eduMap.edumap.A_PRIMAIRE.Entity.Eleve;
 import com.eduMap.edumap.A_PRIMAIRE.Entity.Paiement;
 import com.eduMap.edumap.GLOBALE.Entity.AnneeScolaire;

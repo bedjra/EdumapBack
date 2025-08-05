@@ -1,6 +1,6 @@
 package com.eduMap.edumap.A_PRIMAIRE.enums;
 
 public enum StatutScolarite {
-    SOLDÉ ,
+    SOLDE ,
     EN_COURS
 }

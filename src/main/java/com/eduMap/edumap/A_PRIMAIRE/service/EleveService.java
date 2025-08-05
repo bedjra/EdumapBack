@@ -186,6 +186,38 @@ public class EleveService {
         return dto;
     }
 
-    
+
+    public EleveDto getEleveByMatricule(String matricule) {
+        Eleve eleve = eleveRepository.findByMatricule(matricule);
+
+        if (eleve == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Élève non trouvé avec le matricule : " + matricule);
+        }
+
+        // Mapper Eleve vers EleveDto
+        EleveDto dto = new EleveDto();
+        dto.setId(eleve.getId());
+        dto.setNom(eleve.getNom());
+        dto.setPrenom(eleve.getPrenom());
+        dto.setAdresse(eleve.getAdresse());
+        dto.setClasse(ClassePRIMAIRE.valueOf(String.valueOf(eleve.getClasse()))); // convertir String en enum
+        dto.setSexe(eleve.getSexe());
+        dto.setLieuNais(eleve.getLieuNais());
+        dto.setEtblProv(eleve.getEtblProv());
+        dto.setNationnalite(eleve.getNationnalite());
+        dto.setDateNaiss(eleve.getDateNaiss());
+
+        if (eleve.getTuteur() != null) {
+            dto.setTuteurNom(eleve.getTuteur().getNom());
+            dto.setTuteurPrenom(eleve.getTuteur().getPrenom());
+            dto.setTuteurTelephone(eleve.getTuteur().getTelephone());
+            dto.setTuteurProfession(eleve.getTuteur().getProfession());
+        }
+
+        return dto;
+    }
+
+
+
 
 }

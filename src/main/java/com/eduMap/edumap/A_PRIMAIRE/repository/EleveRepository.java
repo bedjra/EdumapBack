@@ -15,5 +15,6 @@ public interface EleveRepository extends JpaRepository<Eleve, Long> {
     Optional<Eleve> findById(Long id);
     Optional<Eleve> findByNomAndPrenom(String nom, String prenom);
     Optional<Eleve> findByNomAndPrenomAndClasse(String nom, String prenom, ClassePRIMAIRE classe);
+    Eleve findByMatricule(String matricule);
 
 }
