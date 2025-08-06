@@ -270,7 +270,7 @@ public class PrimaireController {
 
 
     @Operation(summary = "get les paiements d'une classe")
-    @GetMapping("/paiement/eleve/{classe}")
+    @GetMapping("/paie/eleve/{classe}")
     public ResponseEntity<?> getPaiementsParClasse(@PathVariable ClassePRIMAIRE classe) {
         try {
             List<PaiementDto> paiements = paiementService.getPaiementsParClasse(classe);
@@ -297,6 +297,11 @@ public class PrimaireController {
         List<PaiementDto> paiements = paiementService.getPaiementsPrimaire(); // à adapter selon ta source
         List<StatPaiementPrimaireDTO> statistiques = paiementService.genererStatistiquesPaiements(paiements);
         return ResponseEntity.ok(statistiques);
+    }
+
+    @GetMapping("/paiement/renvoi/{classe}")
+    public List<PaiementDto> getPaiementsAvecResteParClasse(@PathVariable ClassePRIMAIRE classe) {
+        return paiementService.getPaiementsAvecResteParClasse(classe);
     }
 
 

@@ -4,6 +4,7 @@ package com.eduMap.edumap.A_PRIMAIRE.repository;
 import com.eduMap.edumap.A_PRIMAIRE.Dto.StatPaiementPrimaireDTO;
 import com.eduMap.edumap.A_PRIMAIRE.Entity.Eleve;
 import com.eduMap.edumap.A_PRIMAIRE.Entity.Paiement;
+import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
 import com.eduMap.edumap.GLOBALE.Entity.AnneeScolaire;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +19,6 @@ public interface PaiementRepository extends JpaRepository<Paiement, Long> {
     Double sumMontantActuelByEleveAndAnnee(@Param("eleve") Eleve eleve, @Param("anneeScolaire") AnneeScolaire anneeScolaire);
     Optional<Paiement> findTopByEleveOrderByIdDesc(Eleve eleve);
     List<Paiement> findByEleveOrderByDatePaiementDesc(Eleve eleve);
+    List<Paiement> findByEleve_ClasseAndResteEcolageNot(ClassePRIMAIRE classe, long reste);
 
 }

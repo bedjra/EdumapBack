@@ -60,7 +60,7 @@ public class PaiementService {
         paiement.setMontantActuel((long) montantActuel);
         paiement.setMontantDejaPaye((long) total);
         paiement.setResteEcolage((long) (montantScolarite - total));
-        paiement.setStatut(total == montantScolarite ? StatutScolarite.SOLDE : StatutScolarite.EN_COURS);
+        paiement.setStatut(total == montantScolarite ? StatutScolarite.SOLDÉ : StatutScolarite.EN_COURS);
         paiement.setScolarite(scolarite);
         paiement.setAnneeScolaire(anneeActive);
 
@@ -117,7 +117,7 @@ public class PaiementService {
 
             Long reste = dernierPaiement.getResteEcolage();
             boolean estSolde = (reste != null && reste == 0);
-            dto.setStatut(estSolde ? StatutScolarite.SOLDE : StatutScolarite.EN_COURS);
+            dto.setStatut(estSolde ? StatutScolarite.SOLDÉ : StatutScolarite.EN_COURS);
         } else {
             // Aucun paiement existant
             dto.setMontantDejaPaye(0);
@@ -156,7 +156,7 @@ public class PaiementService {
 
                 Long reste = dernierPaiement.getResteEcolage();
                 boolean estSolde = reste != null && reste == 0;
-                dto.setStatut(estSolde ? StatutScolarite.SOLDE : StatutScolarite.EN_COURS);
+                dto.setStatut(estSolde ? StatutScolarite.SOLDÉ : StatutScolarite.EN_COURS);
             } else {
                 dto.setMontantActuel(0);
                 dto.setMontantDejaPaye(0);
@@ -234,7 +234,7 @@ public class PaiementService {
             long solde = stat.getNombreSolde();
             long enCours = stat.getNombreEnCours();
 
-            if (paiement.getStatut() == StatutScolarite.SOLDE) {
+            if (paiement.getStatut() == StatutScolarite.SOLDÉ) {
                 solde++;
             } else if (paiement.getStatut() == StatutScolarite.EN_COURS) {
                 enCours++;
@@ -253,6 +253,24 @@ public class PaiementService {
         return new ArrayList<>(statsParClasse.values());
     }
 
+
+    public List<PaiementDto> getDerniersPaiementsParClasseAvecReste(ClassePRIMAIRE classe) {
+        List<Paiement> paiements = paiementRepository.findByEleve_ClasseAndResteEcolageNot(classe, 0);
+
+        // Grouper les paiements par id élève et garder le dernier paiement (par id ou date)
+        Map<Long, Paiement> derniersPaiementsParEleve = paiements.stream()
+                .collect(Collectors.toMap(
+                        p -> p.getEleve().getId(), // clé = id de l'élève
+                        p -> p,                    // valeur = paiement
+                        (p1, p2) -> p1.getId() > p2.getId() ? p1 : p2 // garder celui avec l'id le plus grand (le plus récent)
+                ));
+
+        // Convertir en DTO
+        return derniersPaiementsParEleve.values()
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
 
 
 
