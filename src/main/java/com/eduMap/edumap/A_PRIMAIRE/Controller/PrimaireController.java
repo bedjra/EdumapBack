@@ -57,6 +57,11 @@ public class PrimaireController {
         return eleveService.compterTotalEleves();
     }
 
+    @GetMapping("/totaux")
+    public Map<String, Long> getTotauxPaiement() {
+        return paiementService.getMontantsGlobal();
+    }
+
     @Operation(summary = "Ajout d'un eleve ")
     @PostMapping("/eleve")
     public ResponseEntity<Eleve> ajouterEleve(@RequestBody EleveDto dto) {

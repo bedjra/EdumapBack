@@ -302,6 +302,16 @@ public class PaiementService {
     }
 
 
+    public Map<String, Long> getMontantsGlobal() {
+        Long totalPaye = paiementRepository.getTotalMontantDejaPaye();
+        Long totalReste = paiementRepository.getTotalResteEcolage();
+
+        Map<String, Long> result = new HashMap<>();
+        result.put("totalPaye", totalPaye != null ? totalPaye : 0L);
+        result.put("totalReste", totalReste != null ? totalReste : 0L);
+        return result;
+    }
+
 }
 
 
