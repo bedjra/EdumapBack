@@ -300,8 +300,10 @@ public class PrimaireController {
     }
 
     @GetMapping("/paiement/renvoi/{classe}")
-    public List<PaiementDto> getPaiementsAvecResteParClasse(@PathVariable ClassePRIMAIRE classe) {
-        return paiementService.getPaiementsAvecResteParClasse(classe);
+    public ResponseEntity<List<PaiementDto>> getDerniersPaiementsParClasse(
+            @PathVariable("classe") ClassePRIMAIRE classe) {
+        List<PaiementDto> paiements = paiementService.getDerniersPaiementsParClasseAvecReste(classe);
+        return ResponseEntity.ok(paiements);
     }
 
 
