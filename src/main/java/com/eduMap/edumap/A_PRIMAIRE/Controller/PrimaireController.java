@@ -51,6 +51,12 @@ public class PrimaireController {
     @Autowired
     private NoteService notePrimaireService;
 
+    @Operation(summary = "nbre eleve ")
+    @GetMapping("/count")
+    public long getNombreTotalEleves() {
+        return eleveService.compterTotalEleves();
+    }
+
     @Operation(summary = "Ajout d'un eleve ")
     @PostMapping("/eleve")
     public ResponseEntity<Eleve> ajouterEleve(@RequestBody EleveDto dto) {
@@ -283,15 +289,15 @@ public class PrimaireController {
     }
 
     @Operation(summary = "Historique simple des paiements d'un élève (date, montant, reste)")
-    @GetMapping("/paiement/his/{eleveId}")
-    public List<StatPaiementPrimaireDTO> getStatistiquesPaiementsPrimaire() {
-        // Récupérer tous les paiements au primaire
-        List<PaiementDto> paiements = paiementService.getPaiementsPrimaire();
-
-        // Générer les statistiques à partir de la liste de paiements
-        return paiementService.genererStatistiquesPaiements(paiements);
+    @GetMapping("/paie/his/{eleveId}")
+    public ResponseEntity<List<PaiementHistoriqueDto>> getHistoriqueSimple(@PathVariable Long eleveId) {
+        try {
+            List<PaiementHistoriqueDto> historique = paiementService.getHistoriquePaiementsParEleveId(eleveId);
+            return ResponseEntity.ok(historique);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
-
     @GetMapping("/paiement/stat")
     public ResponseEntity<List<StatPaiementPrimaireDTO>> getStatistiquesPaiementPrimaire() {
         List<PaiementDto> paiements = paiementService.getPaiementsPrimaire(); // à adapter selon ta source
@@ -306,6 +312,15 @@ public class PrimaireController {
         return ResponseEntity.ok(paiements);
     }
 
+
+    @GetMapping("/paie/search")
+    public ResponseEntity<List<PaiementHistoriqueDto>> rechercherPaiement(
+            @RequestParam(required = false) String nom,
+            @RequestParam(required = false) String prenom) {
+
+        List<PaiementHistoriqueDto> resultats = paiementService.rechercherHistoriquePaiement(nom, prenom);
+        return ResponseEntity.ok(resultats);
+    }
 
     // // // // // // // // // // // // // // // // // // // // // // //
     // // // // //// // //  Notes

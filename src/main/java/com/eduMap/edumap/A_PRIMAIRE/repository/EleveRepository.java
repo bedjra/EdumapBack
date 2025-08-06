@@ -16,5 +16,6 @@ public interface EleveRepository extends JpaRepository<Eleve, Long> {
     Optional<Eleve> findByNomAndPrenom(String nom, String prenom);
     Optional<Eleve> findByNomAndPrenomAndClasse(String nom, String prenom, ClassePRIMAIRE classe);
     Eleve findByMatricule(String matricule);
+    long count(); // Hérité, mais tu peux aussi l'écrire explicitement
 
 }

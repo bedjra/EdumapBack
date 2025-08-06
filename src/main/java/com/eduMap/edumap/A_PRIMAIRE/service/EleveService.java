@@ -217,7 +217,9 @@ public class EleveService {
         return dto;
     }
 
-
+    public long compterTotalEleves() {
+        return eleveRepository.count();
+    }
 
 
 }

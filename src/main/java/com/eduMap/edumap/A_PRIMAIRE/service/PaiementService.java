@@ -274,6 +274,34 @@ public class PaiementService {
 
 
 
+    public List<PaiementHistoriqueDto> rechercherHistoriquePaiement(String nom, String prenom) {
+        List<Paiement> paiements;
+
+        if (nom != null && !nom.isEmpty() && prenom != null && !prenom.isEmpty()) {
+            paiements = paiementRepository.findByEleveNomContainingIgnoreCaseAndElevePrenomContainingIgnoreCase(nom, prenom);
+        } else if (nom != null && !nom.isEmpty()) {
+            paiements = paiementRepository.findByEleveNomContainingIgnoreCase(nom);
+        } else if (prenom != null && !prenom.isEmpty()) {
+            paiements = paiementRepository.findByElevePrenomContainingIgnoreCase(prenom);
+        } else {
+            // Si aucun critère n'est donné, retourner une liste vide
+            return List.of();
+        }
+
+        return paiements.stream()
+                .map(this::convertToHistoriqueDto)
+                .collect(Collectors.toList());
+    }
+
+    private PaiementHistoriqueDto convertToHistoriqueDto(Paiement paiement) {
+        PaiementHistoriqueDto dto = new PaiementHistoriqueDto();
+        dto.setDatePaiement(paiement.getDatePaiement());
+        dto.setMontantActuel(paiement.getMontantActuel());
+        dto.setResteEcolage(paiement.getResteEcolage());
+        return dto;
+    }
+
+
 }
 
 

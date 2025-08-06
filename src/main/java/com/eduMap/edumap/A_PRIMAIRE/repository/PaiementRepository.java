@@ -20,5 +20,16 @@ public interface PaiementRepository extends JpaRepository<Paiement, Long> {
     Optional<Paiement> findTopByEleveOrderByIdDesc(Eleve eleve);
     List<Paiement> findByEleveOrderByDatePaiementDesc(Eleve eleve);
     List<Paiement> findByEleve_ClasseAndResteEcolageNot(ClassePRIMAIRE classe, long reste);
+    List<Paiement> findByEleveNomContainingIgnoreCase(String nom);
+
+    List<Paiement> findByElevePrenomContainingIgnoreCase(String prenom);
+
+    List<Paiement> findByEleveNomContainingIgnoreCaseAndElevePrenomContainingIgnoreCase(String nom, String prenom);
+
+    @Query("SELECT SUM(p.montantDejaPaye) FROM Paiement p")
+    Long getTotalMontantDejaPaye();
+
+    @Query("SELECT SUM(p.resteEcolage) FROM Paiement p")
+    Long getTotalResteEcolage();
 
 }
