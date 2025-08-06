@@ -19,8 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -187,9 +186,75 @@ public class PaiementService {
     }
 
 
-//    public List<StatPaiementPrimaireDTO> getStatistiquesPaiementParClasse() {
-//        return paiementRepository.getStatistiquesParClasse();
-//    }
+    public List<PaiementDto> getPaiementsPrimaire() {
+        List<Paiement> paiements = paiementRepository.findAll();
+
+        paiements.forEach(p -> System.out.println("Paiement id=" + p.getId() + " classe élève=" + (p.getEleve() != null ? p.getEleve().getClasse() : "null")));
+
+        return paiements.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    private PaiementDto convertToDto(Paiement paiement) {
+        ClassePRIMAIRE classeEleve = paiement.getEleve() != null ? paiement.getEleve().getClasse() : null;
+
+        if (classeEleve == null) {
+            System.out.println("Paiement avec classe élève NULL, id paiement = " + paiement.getId());
+        } else {
+            System.out.println("Paiement avec classe élève : " + classeEleve);
+        }
+
+        PaiementDto dto = new PaiementDto();
+        dto.setEleveId(paiement.getEleve() != null ? paiement.getEleve().getId() : null);
+        dto.setEleveNom(paiement.getEleve() != null ? paiement.getEleve().getNom() : null);
+        dto.setElevePrenom(paiement.getEleve() != null ? paiement.getEleve().getPrenom() : null);
+        dto.setClasse(classeEleve);  // on set la classe de l'élève ici
+        dto.setDatePaiement(paiement.getDatePaiement());
+        dto.setMontantActuel(paiement.getMontantActuel());
+        dto.setResteEcolage(paiement.getResteEcolage());
+        dto.setMontantDejaPaye(paiement.getMontantDejaPaye());
+        dto.setStatut(paiement.getStatut());
+        return dto;
+    }
+
+    public List<StatPaiementPrimaireDTO> genererStatistiquesPaiements(List<PaiementDto> paiements) {
+        Map<ClassePRIMAIRE, StatPaiementPrimaireDTO> statsParClasse = new HashMap<>();
+
+        // Comptage des paiements soldés ou en cours par classe
+        for (PaiementDto paiement : paiements) {
+            ClassePRIMAIRE classe = paiement.getClasse();
+
+            if (classe == null) {
+                System.out.println("PaiementDto sans classe, id eleve=" + paiement.getEleveId());
+                continue; // on ignore ceux sans classe
+            }
+
+            StatPaiementPrimaireDTO stat = statsParClasse.getOrDefault(classe, new StatPaiementPrimaireDTO(classe, 0, 0, 0));
+            long solde = stat.getNombreSolde();
+            long enCours = stat.getNombreEnCours();
+
+            if (paiement.getStatut() == StatutScolarite.SOLDE) {
+                solde++;
+            } else if (paiement.getStatut() == StatutScolarite.EN_COURS) {
+                enCours++;
+            }
+
+            statsParClasse.put(classe, new StatPaiementPrimaireDTO(classe, 0, solde, enCours));
+        }
+
+        // Mise à jour du total élèves par classe
+        for (ClassePRIMAIRE classe : statsParClasse.keySet()) {
+            long total = eleveRepository.countByClasse(classe);
+            StatPaiementPrimaireDTO stat = statsParClasse.get(classe);
+            statsParClasse.put(classe, new StatPaiementPrimaireDTO(classe, total, stat.getNombreSolde(), stat.getNombreEnCours()));
+        }
+
+        return new ArrayList<>(statsParClasse.values());
+    }
+
+
+
 
 }
 

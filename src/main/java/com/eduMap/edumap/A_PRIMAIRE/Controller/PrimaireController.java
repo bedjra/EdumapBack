@@ -283,20 +283,21 @@ public class PrimaireController {
     }
 
     @Operation(summary = "Historique simple des paiements d'un élève (date, montant, reste)")
-    @GetMapping("/paiement/historique/{eleveId}")
-    public ResponseEntity<List<PaiementHistoriqueDto>> getHistoriqueSimple(@PathVariable Long eleveId) {
-        try {
-            List<PaiementHistoriqueDto> historique = paiementService.getHistoriquePaiementsParEleveId(eleveId);
-            return ResponseEntity.ok(historique);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    @GetMapping("/paiement/his/{eleveId}")
+    public List<StatPaiementPrimaireDTO> getStatistiquesPaiementsPrimaire() {
+        // Récupérer tous les paiements au primaire
+        List<PaiementDto> paiements = paiementService.getPaiementsPrimaire();
+
+        // Générer les statistiques à partir de la liste de paiements
+        return paiementService.genererStatistiquesPaiements(paiements);
     }
 
-//    @GetMapping("/Paiement/stat")
-//    public List<StatPaiementPrimaireDTO> getStatistiquesParClasse() {
-//        return paiementService.getStatistiquesPaiementParClasse();
-//    }
+    @GetMapping("/paiement/stat")
+    public ResponseEntity<List<StatPaiementPrimaireDTO>> getStatistiquesPaiementPrimaire() {
+        List<PaiementDto> paiements = paiementService.getPaiementsPrimaire(); // à adapter selon ta source
+        List<StatPaiementPrimaireDTO> statistiques = paiementService.genererStatistiquesPaiements(paiements);
+        return ResponseEntity.ok(statistiques);
+    }
 
 
     // // // // // // // // // // // // // // // // // // // // // // //

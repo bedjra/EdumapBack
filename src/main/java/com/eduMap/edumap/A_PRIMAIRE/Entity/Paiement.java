@@ -32,8 +32,7 @@ public class Paiement {
     private Scolarite scolarite;
 
 
-    @Enumerated(EnumType.STRING)
-    private ClassePRIMAIRE classe;
+
 
     @Enumerated(EnumType.STRING)
     private StatutScolarite statut;
@@ -98,13 +97,7 @@ public class Paiement {
         this.scolarite = scolarite;
     }
 
-    public ClassePRIMAIRE getClasse() {
-        return classe;
-    }
 
-    public void setClasse(ClassePRIMAIRE classe) {
-        this.classe = classe;
-    }
 
     public StatutScolarite getStatut() {
         return statut;
