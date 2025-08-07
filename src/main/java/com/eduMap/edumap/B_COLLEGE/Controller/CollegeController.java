@@ -33,14 +33,14 @@ import java.util.Optional;
 
 public class CollegeController {
 
-    @Autowired
-    private EleveCollegeService eleveCollegeService;
+//    @Autowired
+//    private EleveCollegeService eleveCollegeService;
 
     @Autowired
     private TuteurCollegeService tuteurCollegeService;
 
-    @Autowired
-    private ScolariteCollegeService scolariteCollegeService;
+//    @Autowired
+//    private ScolariteCollegeService scolariteCollegeService;
 
     @Autowired
     private MatiereCollegeService matiereCollegeService;
@@ -48,29 +48,29 @@ public class CollegeController {
     @Autowired
     private ProfCollegeService profCollegeService;
 
-    @Operation(summary = "Ajout d'un eleve ")
-    @PostMapping("/eleve")
-    public ResponseEntity<EleveCollege> ajouterEleve(@RequestBody EleveCollegeDto dto) {
-       EleveCollege eleveCree = eleveCollegeService.ajouterEleveEtTuteur(dto);
-        return ResponseEntity.ok(eleveCree);
-    }
-
-    @Operation(summary = "modifier d'un eleve ")
-    @PutMapping("/eleve/{id}")
-    public ResponseEntity<EleveCollege> modifierEleveParId(
-            @PathVariable("id") Long id,
-            @RequestBody EleveCollegeDto dto) {
-
-        EleveCollege eleveMisAJour = eleveCollegeService.modifierEleveEtTuteur(id, dto);
-        return ResponseEntity.ok(eleveMisAJour);
-    }
-
-    @Operation(summary = "delete un eleve ")
-    @DeleteMapping("/eleve/{id}")
-    public ResponseEntity<Void> supprimerEleveParId(@PathVariable("id") Long id) {
-        eleveCollegeService.supprimerEleve(id);
-        return ResponseEntity.noContent().build();
-    }
+//    @Operation(summary = "Ajout d'un eleve ")
+//    @PostMapping("/eleve")
+//    public ResponseEntity<EleveCollege> ajouterEleve(@RequestBody EleveCollegeDto dto) {
+//       EleveCollege eleveCree = eleveCollegeService.ajouterEleveEtTuteur(dto);
+//        return ResponseEntity.ok(eleveCree);
+//    }
+//
+//    @Operation(summary = "modifier d'un eleve ")
+//    @PutMapping("/eleve/{id}")
+//    public ResponseEntity<EleveCollege> modifierEleveParId(
+//            @PathVariable("id") Long id,
+//            @RequestBody EleveCollegeDto dto) {
+//
+//        EleveCollege eleveMisAJour = eleveCollegeService.modifierEleveEtTuteur(id, dto);
+//        return ResponseEntity.ok(eleveMisAJour);
+//    }
+//
+//    @Operation(summary = "delete un eleve ")
+//    @DeleteMapping("/eleve/{id}")
+//    public ResponseEntity<Void> supprimerEleveParId(@PathVariable("id") Long id) {
+//        eleveCollegeService.supprimerEleve(id);
+//        return ResponseEntity.noContent().build();
+//    }
 
     @Operation(summary = "Récupérer tous les tuteurs ")
     @GetMapping("/tuteur")
