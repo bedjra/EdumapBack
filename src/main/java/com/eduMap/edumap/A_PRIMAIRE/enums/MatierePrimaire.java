@@ -1,11 +1,11 @@
 package com.eduMap.edumap.A_PRIMAIRE.enums;
 
 public enum MatierePrimaire {
-    LECTURE("Lecture"),
-    ECRITURE("Écriture"),
-    CALCUL("Calcul"),
-    DESSIN("Dessin"),
-    MUSIQUE("Musique");
+    Lecture("Lecture"),
+    Ecriture("Ecriture"),
+    Calcul("Calcul"),
+    Dessin("Dessin"),
+    Musique("Musique");
 
     private final String label;
 

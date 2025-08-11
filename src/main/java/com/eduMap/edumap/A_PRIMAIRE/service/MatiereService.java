@@ -23,6 +23,17 @@ public class MatiereService {
                 .toList();
     }
 
+    public Matiere getOrCreateMatiere(String nom) {
+        // Cherche si elle existe déjà (insensible à la casse)
+        return matiereRepository.findByNomIgnoreCase(nom)
+                .orElseGet(() -> {
+                    // Si non trouvée, on la crée
+                    Matiere nouvelle = new Matiere();
+                    nouvelle.setNom(nom);
+                    return matiereRepository.save(nouvelle);
+                });
+    }
+
     public List<Matiere> getMatieresFromDB() {
         return matiereRepository.findAll();
     }

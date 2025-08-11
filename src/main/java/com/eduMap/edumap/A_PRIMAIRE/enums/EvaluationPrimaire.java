@@ -3,13 +3,13 @@ package com.eduMap.edumap.A_PRIMAIRE.enums;
 public enum EvaluationPrimaire {
     OCTOBRE("Octobre"),
     NOVEMBRE("Novembre"),
-    TRIMESTRE_1("Trimestre 1"),
+    TRIMESTRE1("Trimestre1"),
     JANVIER("Janvier"),
     FEVRIER("Février"),
-    TRIMESTRE_2("Trimestre 2"),
+    TRIMESTRE2("Trimestre2"),
     AVRIL("Avril"),
     MAI("Mai"),
-    TRIMESTRE_3("Trimestre 3");
+    TRIMESTRE3("Trimestre3");
 
     private final String label;
 

@@ -33,6 +33,61 @@ public class NoteService {
     @Autowired
     private MatiereRepository matiereRepository;
 
+    @Autowired
+    private MatiereService matiereService;
+
+
+//    public void mettreAJourNotes(NoteDto dto) {
+//        Eleve eleve = eleveRepository.findById(dto.getEleveId())
+//                .orElseThrow(() -> new RuntimeException("Élève introuvable"));
+//        AnneeScolaire annee = AnneeContext.get();
+//
+//        for (NoteDto.MatiereNote noteDto : dto.getNotes()) {
+//            Note note = null;
+//
+//            if (noteDto.getMatiereId() != null) {
+//                Matiere matiere = matiereRepository.findById(noteDto.getMatiereId())
+//                        .orElseThrow(() -> new RuntimeException("Matière personnalisée introuvable"));
+//
+//                note = noteRepository.findByEleveAndClasseAndAnneeScolaireAndMatiereAndEvaluationPrimaire(
+//                        eleve, dto.getClasse(), annee, matiere,
+//                        EvaluationPrimaire.valueOf(dto.getEvaluation())
+//                ).orElse(null);
+//
+//                if (note == null) {
+//                    note = new Note();
+//                    note.setMatiere(matiere);
+//                }
+//
+//            } else if (noteDto.getMatierePrimaire() != null) {
+//                MatierePrimaire matiereEnum = MatierePrimaire.valueOf(noteDto.getMatierePrimaire());
+//
+//                note = noteRepository.findByEleveAndClasseAndAnneeScolaireAndMatierePrimaireAndEvaluationPrimaire(
+//                        eleve, dto.getClasse(), annee, matiereEnum,
+//                        EvaluationPrimaire.valueOf(dto.getEvaluation())
+//                ).orElse(null);
+//
+//                if (note == null) {
+//                    note = new Note();
+//                    note.setMatierePrimaire(matiereEnum);
+//                }
+//
+//            } else {
+//                throw new RuntimeException("Aucune matière spécifiée.");
+//            }
+//
+//            // mise à jour ou création dans les deux cas
+//            note.setEleve(eleve);
+//            note.setAnneeScolaire(annee);
+//            note.setClasse(dto.getClasse());
+//            note.setValeurNote(noteDto.getValeurNote());
+//            note.setEvaluationPrimaire(EvaluationPrimaire.valueOf(dto.getEvaluation()));
+//
+//            noteRepository.save(note);
+//        }
+//    }
+
+
 
     public void mettreAJourNotes(NoteDto dto) {
         Eleve eleve = eleveRepository.findById(dto.getEleveId())
@@ -43,6 +98,7 @@ public class NoteService {
             Note note = null;
 
             if (noteDto.getMatiereId() != null) {
+                // Matière personnalisée existante
                 Matiere matiere = matiereRepository.findById(noteDto.getMatiereId())
                         .orElseThrow(() -> new RuntimeException("Matière personnalisée introuvable"));
 
@@ -57,23 +113,38 @@ public class NoteService {
                 }
 
             } else if (noteDto.getMatierePrimaire() != null) {
-                MatierePrimaire matiereEnum = MatierePrimaire.valueOf(noteDto.getMatierePrimaire());
+                try {
+                    // ✅ Cas enum connu
+                    MatierePrimaire matiereEnum = MatierePrimaire.valueOf(noteDto.getMatierePrimaire());
 
-                note = noteRepository.findByEleveAndClasseAndAnneeScolaireAndMatierePrimaireAndEvaluationPrimaire(
-                        eleve, dto.getClasse(), annee, matiereEnum,
-                        EvaluationPrimaire.valueOf(dto.getEvaluation())
-                ).orElse(null);
+                    note = noteRepository.findByEleveAndClasseAndAnneeScolaireAndMatierePrimaireAndEvaluationPrimaire(
+                            eleve, dto.getClasse(), annee, matiereEnum,
+                            EvaluationPrimaire.valueOf(dto.getEvaluation())
+                    ).orElse(null);
 
-                if (note == null) {
-                    note = new Note();
-                    note.setMatierePrimaire(matiereEnum);
+                    if (note == null) {
+                        note = new Note();
+                        note.setMatierePrimaire(matiereEnum);
+                    }
+                } catch (IllegalArgumentException e) {
+                    // ✅ Cas valeur non-enum → enregistrer dans PrimaireMatiere
+                    Matiere matiere = matiereService.getOrCreateMatiere(noteDto.getMatierePrimaire());
+
+                    note = noteRepository.findByEleveAndClasseAndAnneeScolaireAndMatiereAndEvaluationPrimaire(
+                            eleve, dto.getClasse(), annee, matiere,
+                            EvaluationPrimaire.valueOf(dto.getEvaluation())
+                    ).orElse(null);
+
+                    if (note == null) {
+                        note = new Note();
+                        note.setMatiere(matiere);
+                    }
                 }
-
             } else {
                 throw new RuntimeException("Aucune matière spécifiée.");
             }
 
-            // mise à jour ou création dans les deux cas
+            // Mise à jour commune
             note.setEleve(eleve);
             note.setAnneeScolaire(annee);
             note.setClasse(dto.getClasse());
