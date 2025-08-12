@@ -1,4 +1,4 @@
-package skool.saas.skool.B_COLLEGE.service;
+package com.eduMap.edumap.B_COLLEGE.service;
 
 import com.eduMap.edumap.B_COLLEGE.Entity.ScolariteCollege;
 import com.eduMap.edumap.B_COLLEGE.enums.ClasseCOLLEGE;

@@ -1,4 +1,4 @@
-package skool.saas.skool.B_COLLEGE.service;
+package com.eduMap.edumap.B_COLLEGE.service;
 
 import com.eduMap.edumap.B_COLLEGE.Dto.CollegeStatistiqueDto;
 import com.eduMap.edumap.B_COLLEGE.Dto.EleveCollegeDto;
