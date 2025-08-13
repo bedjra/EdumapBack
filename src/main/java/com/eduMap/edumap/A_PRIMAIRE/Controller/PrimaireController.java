@@ -12,12 +12,16 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -259,21 +263,27 @@ public class PrimaireController {
     // // // // // // // // // // // // // // // // // // // // // // //
     // // // // //// // //  Paiement
     @Operation(summary = "Enregistrer un paiement et générer le reçu PDF")
-    @PostMapping("/paiement")
-    public ResponseEntity<PaiementDto> enregistrerPaiement(@RequestBody PaiementRequestDto dto) {
+    @PostMapping(value = "/paiement", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> enregistrerPaiement(@RequestBody PaiementRequestDto dto) {
         try {
             PaiementDto paiementDto = paiementService.enregistrerPaiement(dto);
 
-            // ✅ Appel via l'instance injectée
-            pdfService.genererRecuPaiement(paiementDto);
+            // 📂 Générer le PDF en mémoire et le sauvegarder dans "Recu/"
+            byte[] pdfBytes = pdfService.genererRecuPaiementEtSauvegarder(paiementDto);
 
-            return ResponseEntity.ok(paiementDto);
+            // 📤 Retourner le PDF au frontend
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment; filename=recu_" + paiementDto.getId() + ".pdf")
+                    .body(pdfBytes);
+
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 
 
 
