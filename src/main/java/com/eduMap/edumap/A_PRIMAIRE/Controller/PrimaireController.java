@@ -1,11 +1,9 @@
 package com.eduMap.edumap.A_PRIMAIRE.Controller;
 
 import com.eduMap.edumap.A_PRIMAIRE.Dto.*;
-import com.eduMap.edumap.A_PRIMAIRE.Entity.Eleve;
-import com.eduMap.edumap.A_PRIMAIRE.Entity.Matiere;
-import com.eduMap.edumap.A_PRIMAIRE.Entity.Professeur;
-import com.eduMap.edumap.A_PRIMAIRE.Entity.Scolarite;
+import com.eduMap.edumap.A_PRIMAIRE.Entity.*;
 import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
+import com.eduMap.edumap.A_PRIMAIRE.enums.EvaluationPrimaire;
 import com.eduMap.edumap.A_PRIMAIRE.service.*;
 import com.eduMap.edumap.A_PRIMAIRE.service.PdfService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -369,19 +367,6 @@ public class PrimaireController {
 
     // // // // // // // // // // // // // // // // // // // // // // //
     // // // // //// // //  Notes
-//    @Operation(summary = "Ajouter des notes pour un élève à partir de son nom, prénom et classe")
-//    @PostMapping("/note")
-//    public ResponseEntity<?> mettreAJourNotes(@RequestBody NoteDto noteDto) {
-//        try {
-//            notePrimaireService.mettreAJourNotes(noteDto);
-//            return ResponseEntity.ok("✅ Notes mises à jour avec succès.");
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.badRequest().body("❌ Erreur : " + e.getMessage());
-//        } catch (Exception e) {
-//            return ResponseEntity.status(500).body("❌ Erreur serveur : " + e.getMessage());
-//        }
-//    }
-
     @Operation(summary = "Ajouter des notes pour un élève à partir de son nom, prénom et classe")
     @PostMapping("/note")
     public ResponseEntity<Map<String, String>> mettreAJourNotes(@RequestBody NoteDto noteDto) {
@@ -408,6 +393,33 @@ public class PrimaireController {
             return ResponseEntity.ok(notes);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("❌ Erreur serveur : " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/note/{eleveId}")
+    public ResponseEntity<List<Note>> getAllNotes(@PathVariable Long eleveId) {
+        return ResponseEntity.ok(notePrimaireService.getAllNotes(eleveId));
+    }
+
+    @Operation(summary = "Récupérer les notes d'un élève pour une évaluation donnée")
+    @GetMapping("/note/{eleveId}/{evaluation}")
+    public ResponseEntity<?> getNotesByEvaluation(
+            @PathVariable Long eleveId,
+            @PathVariable EvaluationPrimaire evaluation) {
+        try {
+            List<NoteDto> notesDto = notePrimaireService.getNotesByEvaluation(eleveId, evaluation);
+
+            if (notesDto.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("❌ Aucune note trouvée pour cet élève.");
+            }
+
+            return ResponseEntity.ok(notesDto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("❌ Erreur : " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("❌ Erreur serveur : " + e.getMessage());
         }
     }
 

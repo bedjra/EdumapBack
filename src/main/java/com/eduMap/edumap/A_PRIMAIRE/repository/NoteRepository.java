@@ -10,6 +10,7 @@ import com.eduMap.edumap.GLOBALE.Entity.AnneeScolaire;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
+import java.util.List;
 import java.util.Optional;
 
 public interface NoteRepository extends JpaRepository<Note, Long> {
@@ -28,6 +29,12 @@ public interface NoteRepository extends JpaRepository<Note, Long> {
             AnneeScolaire anneeScolaire,
             MatierePrimaire matierePrimaire,
             EvaluationPrimaire evaluationPrimaire
+    );
+
+    List<Note> findByEleveAndAnneeScolaire(Eleve eleve, AnneeScolaire annee);
+
+    List<Note> findByEleveAndAnneeScolaireAndEvaluationPrimaire(
+            Eleve eleve, AnneeScolaire annee, EvaluationPrimaire evaluation
     );
 
 }

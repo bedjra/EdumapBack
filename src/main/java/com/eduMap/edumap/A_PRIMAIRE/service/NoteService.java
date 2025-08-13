@@ -37,56 +37,6 @@ public class NoteService {
     private MatiereService matiereService;
 
 
-//    public void mettreAJourNotes(NoteDto dto) {
-//        Eleve eleve = eleveRepository.findById(dto.getEleveId())
-//                .orElseThrow(() -> new RuntimeException("Élève introuvable"));
-//        AnneeScolaire annee = AnneeContext.get();
-//
-//        for (NoteDto.MatiereNote noteDto : dto.getNotes()) {
-//            Note note = null;
-//
-//            if (noteDto.getMatiereId() != null) {
-//                Matiere matiere = matiereRepository.findById(noteDto.getMatiereId())
-//                        .orElseThrow(() -> new RuntimeException("Matière personnalisée introuvable"));
-//
-//                note = noteRepository.findByEleveAndClasseAndAnneeScolaireAndMatiereAndEvaluationPrimaire(
-//                        eleve, dto.getClasse(), annee, matiere,
-//                        EvaluationPrimaire.valueOf(dto.getEvaluation())
-//                ).orElse(null);
-//
-//                if (note == null) {
-//                    note = new Note();
-//                    note.setMatiere(matiere);
-//                }
-//
-//            } else if (noteDto.getMatierePrimaire() != null) {
-//                MatierePrimaire matiereEnum = MatierePrimaire.valueOf(noteDto.getMatierePrimaire());
-//
-//                note = noteRepository.findByEleveAndClasseAndAnneeScolaireAndMatierePrimaireAndEvaluationPrimaire(
-//                        eleve, dto.getClasse(), annee, matiereEnum,
-//                        EvaluationPrimaire.valueOf(dto.getEvaluation())
-//                ).orElse(null);
-//
-//                if (note == null) {
-//                    note = new Note();
-//                    note.setMatierePrimaire(matiereEnum);
-//                }
-//
-//            } else {
-//                throw new RuntimeException("Aucune matière spécifiée.");
-//            }
-//
-//            // mise à jour ou création dans les deux cas
-//            note.setEleve(eleve);
-//            note.setAnneeScolaire(annee);
-//            note.setClasse(dto.getClasse());
-//            note.setValeurNote(noteDto.getValeurNote());
-//            note.setEvaluationPrimaire(EvaluationPrimaire.valueOf(dto.getEvaluation()));
-//
-//            noteRepository.save(note);
-//        }
-//    }
-
 
 
     public void mettreAJourNotes(NoteDto dto) {
@@ -191,6 +141,50 @@ public class NoteService {
         return new ArrayList<>(regroupement.values());
     }
 
+    public List<Note> getAllNotes(Long eleveId) {
+        Eleve eleve = eleveRepository.findById(eleveId)
+                .orElseThrow(() -> new RuntimeException("Élève introuvable"));
+        AnneeScolaire annee = AnneeContext.get();
+        return noteRepository.findByEleveAndAnneeScolaire(eleve, annee);
+    }
+
+    public List<NoteDto> getNotesByEvaluation(Long eleveId, EvaluationPrimaire evaluation) {
+        // Vérifier que l'élève existe
+        Eleve eleve = eleveRepository.findById(eleveId)
+                .orElseThrow(() -> new RuntimeException("Élève introuvable"));
+
+        // Récupérer l'année scolaire en cours
+        AnneeScolaire annee = AnneeContext.get();
+
+        // Récupérer les notes correspondantes
+        List<Note> notes = noteRepository
+                .findByEleveAndAnneeScolaireAndEvaluationPrimaire(eleve, annee, evaluation);
+
+        // Construire le DTO
+        NoteDto dto = new NoteDto();
+        dto.setEleveId(eleve.getId());
+        dto.setEvaluation(evaluation.name());
+        dto.setClasse(notes.isEmpty() ? null : notes.get(0).getClasse());
+        dto.setAnneeScolaireId(annee.getId());
+
+        // Transformer les notes en MatiereNote DTO
+        List<NoteDto.MatiereNote> matieres = notes.stream().map(n -> {
+            NoteDto.MatiereNote m = new NoteDto.MatiereNote();
+            if (n.getMatiere() != null) {
+                m.setMatiereId(n.getMatiere().getId());
+            }
+            if (n.getMatierePrimaire() != null) {
+                m.setMatierePrimaire(n.getMatierePrimaire().name());
+            }
+            m.setValeurNote(n.getValeurNote());
+            return m;
+        }).toList();
+
+        dto.setNotes(matieres);
+
+        // On retourne une liste contenant un seul DTO
+        return List.of(dto);
+    }
 
 }
 
