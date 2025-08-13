@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 public class PaiementDto {
 
+    private Long id;
     private Long eleveId;
     private String eleveNom;
     private String elevePrenom;
@@ -100,5 +101,13 @@ public class PaiementDto {
 
     public void setStatut(StatutScolarite statut) {
         this.statut = statut;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -259,6 +259,10 @@ public class PrimaireController {
     public ResponseEntity<PaiementDto> enregistrerPaiement(@RequestBody PaiementRequestDto dto) {
         try {
             PaiementDto paiementDto = paiementService.enregistrerPaiement(dto);
+
+            // 🔹 Génération automatique du PDF après enregistrement
+            pdfService.genererRecuPaiement(paiementDto);
+
             return ResponseEntity.ok(paiementDto);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
@@ -266,6 +270,7 @@ public class PrimaireController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 
 
     @Operation(summary = "get les paiement by id")
