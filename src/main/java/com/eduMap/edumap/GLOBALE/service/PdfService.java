@@ -18,7 +18,7 @@ import java.util.List;
 public class PdfService {
 
     @Autowired
-    private ConfigurationService configurationService;
+    private ConfigurationService configurationService; // Service injecté par Spring
 
     public void genererRecuPaiement(PaiementDto paiement) throws Exception {
         // 📂 Dossier de sortie
@@ -31,10 +31,10 @@ public class PdfService {
         // 📄 Nom du fichier
         String nomFichier = dossier + "recu_" + paiement.getId() + ".pdf";
 
-        // 📌 Récupérer infos école (première config trouvée)
+        // 📌 Récupérer infos école (première config)
         List<Configuration> configs = configurationService.getAllConfigurations();
         if (configs.isEmpty()) {
-            throw new IllegalStateException("Aucune configuration d'école trouvée");
+            throw new IllegalStateException("Aucune configuration trouvée");
         }
         Configuration config = configs.get(0);
 
@@ -50,18 +50,15 @@ public class PdfService {
             document.add(logo);
         }
 
-        // Informations école
+        // Infos école
         document.add(new Paragraph(config.getNom()));
         document.add(new Paragraph(config.getAdresse()));
         document.add(new Paragraph("Tel: " + config.getTel()));
         document.add(new Paragraph(" "));
 
-        // Détails de la facture
+        // Infos paiement
         document.add(new Paragraph("FACTURE N°: " + numeroFacture));
         document.add(new Paragraph("Date: " + paiement.getDatePaiement()));
-        document.add(new Paragraph(" "));
-
-        // Infos élève
         document.add(new Paragraph("Nom élève: " + paiement.getEleveNom() + " " + paiement.getElevePrenom()));
         document.add(new Paragraph("Classe: " + paiement.getClasse()));
         document.add(new Paragraph("Montant payé: " + paiement.getMontantActuel() + " " + config.getDevise()));
@@ -75,3 +72,4 @@ public class PdfService {
         document.close();
     }
 }
+

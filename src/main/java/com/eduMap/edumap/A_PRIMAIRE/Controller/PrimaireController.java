@@ -7,6 +7,7 @@ import com.eduMap.edumap.A_PRIMAIRE.Entity.Professeur;
 import com.eduMap.edumap.A_PRIMAIRE.Entity.Scolarite;
 import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
 import com.eduMap.edumap.A_PRIMAIRE.service.*;
+import com.eduMap.edumap.GLOBALE.service.PdfService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
@@ -50,6 +51,9 @@ public class PrimaireController {
 
     @Autowired
     private NoteService notePrimaireService;
+
+    @Autowired
+    private PdfService pdfService;
 
     @Operation(summary = "nbre eleve ")
     @GetMapping("/count")
@@ -254,13 +258,13 @@ public class PrimaireController {
 
     // // // // // // // // // // // // // // // // // // // // // // //
     // // // // //// // //  Paiement
-    @Operation(summary = "post un paiement")
+    @Operation(summary = "Enregistrer un paiement et générer le reçu PDF")
     @PostMapping("/paiement")
     public ResponseEntity<PaiementDto> enregistrerPaiement(@RequestBody PaiementRequestDto dto) {
         try {
             PaiementDto paiementDto = paiementService.enregistrerPaiement(dto);
 
-            // 🔹 Génération automatique du PDF après enregistrement
+            // ✅ Appel via l'instance injectée
             pdfService.genererRecuPaiement(paiementDto);
 
             return ResponseEntity.ok(paiementDto);

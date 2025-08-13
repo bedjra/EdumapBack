@@ -68,6 +68,7 @@ public class PaiementService {
 
         // Construire et retourner la réponse DTO
         PaiementDto response = new PaiementDto();
+        response.setId(paiement.getId());
         response.setEleveId(eleve.getId());
         response.setEleveNom(eleve.getNom());
         response.setElevePrenom(eleve.getPrenom());
