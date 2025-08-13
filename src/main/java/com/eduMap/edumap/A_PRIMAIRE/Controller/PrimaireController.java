@@ -24,10 +24,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -372,18 +369,36 @@ public class PrimaireController {
 
     // // // // // // // // // // // // // // // // // // // // // // //
     // // // // //// // //  Notes
+//    @Operation(summary = "Ajouter des notes pour un élève à partir de son nom, prénom et classe")
+//    @PostMapping("/note")
+//    public ResponseEntity<?> mettreAJourNotes(@RequestBody NoteDto noteDto) {
+//        try {
+//            notePrimaireService.mettreAJourNotes(noteDto);
+//            return ResponseEntity.ok("✅ Notes mises à jour avec succès.");
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.badRequest().body("❌ Erreur : " + e.getMessage());
+//        } catch (Exception e) {
+//            return ResponseEntity.status(500).body("❌ Erreur serveur : " + e.getMessage());
+//        }
+//    }
+
     @Operation(summary = "Ajouter des notes pour un élève à partir de son nom, prénom et classe")
     @PostMapping("/note")
-    public ResponseEntity<?> mettreAJourNotes(@RequestBody NoteDto noteDto) {
+    public ResponseEntity<Map<String, String>> mettreAJourNotes(@RequestBody NoteDto noteDto) {
+        Map<String, String> response = new HashMap<>();
         try {
             notePrimaireService.mettreAJourNotes(noteDto);
-            return ResponseEntity.ok("✅ Notes mises à jour avec succès.");
+            response.put("message", "✅ Notes mises à jour avec succès.");
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("❌ Erreur : " + e.getMessage());
+            response.put("message", "❌ Erreur : " + e.getMessage());
+            return ResponseEntity.badRequest().body(response);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("❌ Erreur serveur : " + e.getMessage());
+            response.put("message", "❌ Erreur serveur : " + e.getMessage());
+            return ResponseEntity.status(500).body(response);
         }
     }
+
 
 
     @GetMapping("/note/all")
