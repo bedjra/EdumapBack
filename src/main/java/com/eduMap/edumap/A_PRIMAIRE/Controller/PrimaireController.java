@@ -20,7 +20,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
@@ -263,19 +265,16 @@ public class PrimaireController {
     // // // // // // // // // // // // // // // // // // // // // // //
     // // // // //// // //  Paiement
     @Operation(summary = "Enregistrer un paiement et générer le reçu PDF")
-    @PostMapping(value = "/paiement", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<byte[]> enregistrerPaiement(@RequestBody PaiementRequestDto dto) {
+    @PostMapping("/paiement")
+    public ResponseEntity<PaiementDto> enregistrerPaiement(@RequestBody PaiementRequestDto dto) {
         try {
             PaiementDto paiementDto = paiementService.enregistrerPaiement(dto);
 
-            // 📂 Générer le PDF en mémoire et le sauvegarder dans "Recu/"
-            byte[] pdfBytes = pdfService.genererRecuPaiementEtSauvegarder(paiementDto);
+            // 📂 Génération et stockage du PDF dans Recu/
+            pdfService.genererRecuPaiementEtSauvegarder(paiementDto);
 
-            // 📤 Retourner le PDF au frontend
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION,
-                            "attachment; filename=recu_" + paiementDto.getId() + ".pdf")
-                    .body(pdfBytes);
+            // ✅ Retourne juste le PaiementDto (pas le PDF)
+            return ResponseEntity.ok(paiementDto);
 
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
@@ -283,6 +282,31 @@ public class PrimaireController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+
+    @Operation(summary = "Récupérer le reçu PDF d’un paiement")
+    @GetMapping("/paiement/recu/{id}")
+    public ResponseEntity<byte[]> getRecuPaiement(@PathVariable Long id) {
+        try {
+            // 📂 Chemin vers ton dossier Recu/
+            Path pdfPath = Paths.get("Recu/recu_" + id + ".pdf");
+
+            if (!Files.exists(pdfPath)) {
+                return ResponseEntity.notFound().build();
+            }
+
+            byte[] pdfBytes = Files.readAllBytes(pdfPath);
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=recu_" + id + ".pdf")
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(pdfBytes);
+
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 
 
 
