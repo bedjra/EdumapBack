@@ -7,7 +7,7 @@ import com.eduMap.edumap.A_PRIMAIRE.Entity.Professeur;
 import com.eduMap.edumap.A_PRIMAIRE.Entity.Scolarite;
 import com.eduMap.edumap.A_PRIMAIRE.enums.ClassePRIMAIRE;
 import com.eduMap.edumap.A_PRIMAIRE.service.*;
-import com.eduMap.edumap.GLOBALE.service.PdfService;
+import com.eduMap.edumap.A_PRIMAIRE.service.PdfService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
@@ -271,7 +271,7 @@ public class PrimaireController {
             PaiementDto paiementDto = paiementService.enregistrerPaiement(dto);
 
             // 📂 Génération et stockage du PDF dans Recu/
-            pdfService.genererRecuPaiementEtSauvegarder(paiementDto);
+            pdfService.genererRecuPaiement(paiementDto);
 
             // ✅ Retourne juste le PaiementDto (pas le PDF)
             return ResponseEntity.ok(paiementDto);
