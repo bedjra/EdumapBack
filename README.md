@@ -48,4 +48,4 @@ Bedjra Armel – Développeur backend
 
 ## 📄 Licence
 
-Projet personnel réalisé pour démontrer son expertise en **Spring Boot**._
+Projet personnel réalisé pour démontrer son expertise en **Spring Boot**.
