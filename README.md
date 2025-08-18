@@ -39,7 +39,7 @@ _---
 ./mvnw spring-boot:run
 
 3. L’API sera disponible à :
-👉 http://localhost:8080
+👉 http://localhost:8060/api/
 
 
 ## 🤝 Contributeur
