@@ -50,5 +50,6 @@ Bedjra Armel – Développeur backend
 
 Projet personnel réalisé pour démontrer son expertise en **Spring Boot**.
 
+## 📚 Documentation Swagger
 
 ![Texte alternatif](src/main/resources/templates/Capture.PNG)

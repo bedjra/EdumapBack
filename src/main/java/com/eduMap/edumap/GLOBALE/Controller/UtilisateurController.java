@@ -76,7 +76,6 @@ public class  UtilisateurController {
         }
     }
 
-    // ✅ Enregistrement d’un utilisateur (avec rôle)
     @Operation(summary = "Inscription d'un compte")
     @PostMapping("/save")
     public ResponseEntity<Utilisateur> saveUtilisateur(@RequestBody Utilisateur utilisateur) {
